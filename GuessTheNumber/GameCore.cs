@@ -5,6 +5,7 @@ internal class GameCore
     Random random = new Random();
     private int _target;
     private int _userChances = 0;
+    private int _userLives;
     public int Target => _target;
 
     public GameCore()
@@ -17,16 +18,16 @@ internal class GameCore
     public static void GameStart()
     {
         GameCore gameCore = new GameCore();
-
-        Console.WriteLine("Welcome in the Guess The Number\nRules are simple, guess the random number in range form 0 to 100\nHave Fun :)");
+        Console.WriteLine("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.");
         // User have to choose diffiulty level with proper input
         while (gameCore._userChances != 3 && gameCore._userChances != 5 && gameCore._userChances != 10)
         {
             try
             {
-                Console.WriteLine("Pick the difficulty (e/m/h): ");
+                Console.WriteLine("Please select the difficulty\nEasy (10 chances)\nMedium (5 chances)\nHard (3 chances)\n(e/m/h): ");
                 string userInputDifficulty = Console.ReadLine();
                 gameCore._userChances = GameDifficulty(userInputDifficulty);
+                gameCore._userLives = gameCore._userChances;
             }
             catch(Exception ex)
             {
@@ -39,17 +40,23 @@ internal class GameCore
             // Making sure that user input is accepted
             try
             {
-                Console.WriteLine("Guess the number!");
+                Console.WriteLine("Enter your guess: ");
                 int userInputGuess = int.Parse(Console.ReadLine());
                 if (gameCore.IsCorrect(userInputGuess))
                 {
-                    gameCore.IsCorrect(userInputGuess);
                     break;
                 }
                 gameCore._userChances--;
                 if (gameCore._userChances == 0)
                 {
                     Console.WriteLine($"You lost :(\nThe target was: {gameCore._target}");
+                    Console.WriteLine("Want to restart? (y/n)");
+                    string userInputRestart = Console.ReadLine();
+                    userInputRestart = userInputRestart.ToUpper();
+                    if (userInputRestart[0] == 'Y')
+                    {
+                        GameStart();
+                    }
                 }
             }
             catch (Exception ex) 
@@ -58,7 +65,6 @@ internal class GameCore
             }
         }
     }
-    // Might change it to enum in the future
     public static int GameDifficulty(string gameDifficulty)
     {
         gameDifficulty = gameDifficulty.ToUpper();
@@ -72,30 +78,34 @@ internal class GameCore
                     return 3;
             }
         // Throws an error if the user provided diffrent value than expected and the while loop did not work
-        throw new Exception("Error occured");
+        throw new Exception("Pass the correct value");
     }
     // Function that checks if user input is the targer
     public bool IsCorrect(int userInput)
     {
-        GameCore gameCore = new GameCore();
         if (userInput == Target) 
         {
-            Console.WriteLine("You guessed the number!");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"You guessed the number! The number was: {Target}\nYou guessed it in {_userLives - _userChances + 1} attempts!");
+            Console.ResetColor();
             return true;
         }
 
         if (userInput > Target)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("The target is lower.");
+            Console.ResetColor();
             return false;
         }
 
         if(userInput < Target)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("The target is higher.");
+            Console.ResetColor();
             return false;
         }
-        // Might change to an exception
         return false;
     }
 }
