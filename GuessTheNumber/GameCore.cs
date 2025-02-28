@@ -50,13 +50,6 @@ internal class GameCore
                 if (gameCore._userChances == 0)
                 {
                     Console.WriteLine($"You lost :(\nThe target was: {gameCore._target}");
-                    //Console.WriteLine("Want to restart? (y/n)");
-                    //string userInputRestart = Console.ReadLine();
-                    //userInputRestart = userInputRestart.ToUpper();
-                    //if (userInputRestart[0] == 'Y')
-                    //{
-                    //    GameStart();
-                    //}
                 }
             }
             catch (Exception ex) 
