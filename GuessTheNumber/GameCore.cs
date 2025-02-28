@@ -50,13 +50,13 @@ internal class GameCore
                 if (gameCore._userChances == 0)
                 {
                     Console.WriteLine($"You lost :(\nThe target was: {gameCore._target}");
-                    Console.WriteLine("Want to restart? (y/n)");
-                    string userInputRestart = Console.ReadLine();
-                    userInputRestart = userInputRestart.ToUpper();
-                    if (userInputRestart[0] == 'Y')
-                    {
-                        GameStart();
-                    }
+                    //Console.WriteLine("Want to restart? (y/n)");
+                    //string userInputRestart = Console.ReadLine();
+                    //userInputRestart = userInputRestart.ToUpper();
+                    //if (userInputRestart[0] == 'Y')
+                    //{
+                    //    GameStart();
+                    //}
                 }
             }
             catch (Exception ex) 
@@ -94,7 +94,7 @@ internal class GameCore
         if (userInput > Target)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("The target is lower.");
+            Console.WriteLine("The target is lower. v");
             Console.ResetColor();
             return false;
         }
@@ -102,7 +102,7 @@ internal class GameCore
         if(userInput < Target)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("The target is higher.");
+            Console.WriteLine("The target is higher. ^");
             Console.ResetColor();
             return false;
         }
